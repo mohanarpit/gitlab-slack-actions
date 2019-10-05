@@ -1,4 +1,5 @@
 const axios = require('axios')
+const gitlabApi = require('./gitlab-api')
 
 module.exports.view = async (payload, res) => {
 
@@ -97,6 +98,11 @@ module.exports.submit = async (payload, res) => {
     const response_url = payload.response_url
     const trigger_id = payload.trigger_id
     console.log("Got view_id: " + payload.view.id)
+    const state_values = payload.view.state.values
+
+    const gitlabResponse = await gitlabApi.create_issue(state_values.issue_title.issue_title_input.value, 
+        state_values.issue_desc.issue_description_input.value)
+    console.log(gitlabResponse)
 
     const res_body = {
         "response_action": "update",

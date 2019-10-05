@@ -8,10 +8,6 @@ const port = 3000
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/gitlab', function (req, res) {
-    gitlabApi.list_issues()
-})
-
 app.post('/slack/events', (req, res) => {
     console.log(req.body)
     const body = req.body
@@ -42,4 +38,6 @@ app.post('/slack/interactions', async (req, res) => {
     res.send(JSON.stringify(response))
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, async () => {
+    console.log(`Example app listening on port ${port}!`)
+})
