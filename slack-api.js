@@ -103,8 +103,18 @@ module.exports.submit_new = async (payload, res) => {
                       type: 'section',
                       text: {
                         type: 'plain_text',
-                        text: 'Successfully created Gitlab Issue #' + gitlabResponse.iid + '. Ignore the error above if you see an issue number.'
+                        text: 'Thanks for reporting a bug! \n\nSuccessfully created Gitlab Issue #' + gitlabResponse.iid + '. Ignore the error above if you see an issue number.'
                       }
+                    },
+                    {
+                        "type": "image",
+                        "title": {
+                            "type": "plain_text",
+                            "text": "Rejoice in your contribution to the project",
+                            "emoji": true
+                        },
+                        "image_url": "https://images.unsplash.com/photo-1454486837617-ce8e1ba5ebfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2252&q=80",
+                        "alt_text": "Celebration image"
                     }
                 ],
                 close: {
