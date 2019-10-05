@@ -1,16 +1,17 @@
 const axios = require('axios')
+const gitlabApi = require('./gitlab-api')
 
 module.exports.view = async (payload, res) => {
 
-    callback_id = payload.callback_id
+    const callback_id = payload.callback_id
     
     if(callback_id != 'slack_gitlab_create_issue') {
         return {error_msg: "Invalid callback_id"}
     }
 
-    response_url = payload.response_url
-    text = payload.message.text
-    trigger_id = payload.trigger_id
+    const response_url = payload.response_url
+    const text = payload.message.text
+    const trigger_id = payload.trigger_id
 
     let response = await axios.post('https://slack.com/api/views.open', {
         "trigger_id": trigger_id,
@@ -87,16 +88,21 @@ module.exports.view = async (payload, res) => {
 
 module.exports.submit = async (payload, res) => {
     console.log("*** In the submit")
-    callback_id = payload.view.callback_id
+    const callback_id = payload.view.callback_id
     
     if(callback_id != 'slack_gitlab_create_issue') {
         console.log("got callback_id")
         return {error_msg: "Invalid callback_id"}
     }
 
-    response_url = payload.response_url
-    trigger_id = payload.trigger_id
+    const response_url = payload.response_url
+    const trigger_id = payload.trigger_id
     console.log("Got view_id: " + payload.view.id)
+    const state_values = payload.view.state.values
+
+    const gitlabResponse = await gitlabApi.create_issue(state_values.issue_title.issue_title_input.value, 
+        state_values.issue_desc.issue_description_input.value)
+    console.log(gitlabResponse)
 
     const res_body = {
         "response_action": "update",
