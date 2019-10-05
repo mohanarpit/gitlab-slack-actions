@@ -6,7 +6,7 @@ const api = new Gitlab({
 const projectId = process.env.GITLAB_PROJECT_ID
 
 module.exports.create_issue = async(title, desc) => {
-    console.log("*** Going to create gitlab issue")
+    console.log("Going to create gitlab issue")
     const opts = {
         'title': title,
         'description': desc
