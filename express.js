@@ -1,4 +1,4 @@
-const dialog = require('./slack-api.js')
+import SlackHandler from './slackHandler.js'
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -6,6 +6,20 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const slackHandler = new SlackHandler()
+
+app.post('/slack/commands', async (req, res) => {
+    const body = req.body
+    const command = body.command
+    if(command != '/forge') {
+        res.status(404)
+        res.send('Invalid command')
+        return
+    }
+    const response = await slackHandler.slashCommand(body)
+    res.send(response)
+})
 
 app.post('/slack/events', (req, res) => {
     console.log(req.body)
@@ -26,11 +40,11 @@ app.post('/slack/interactions', async (req, res) => {
     switch(type) {
         case "message_action": 
             console.log("Going to process new view msg")
-            response = await dialog.view_new(payload)
+            response = await slackHandler.view(payload)
             break
         case "view_submission":
             console.log("Going to process view submission")
-            response = await dialog.submit_new(payload, res)
+            response = await slackHandler.submit(payload)
             break
     }
     console.log("Going to send response to Slack: " + JSON.stringify(response))
