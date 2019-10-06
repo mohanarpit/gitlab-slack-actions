@@ -17,7 +17,7 @@ export default class SlackHandler {
             return {error_msg: "Invalid callback_id"}
         }
     
-        const text = payload.message.text
+        let text = payload.message.text
         const trigger_id = payload.trigger_id
         let result = {success: false}
         if(!_.isEmpty(payload.message.files)) {
