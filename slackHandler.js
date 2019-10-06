@@ -30,6 +30,9 @@ export default class SlackHandler {
                 text += `\n\n${fileUrl}`
             })
         }
+        const userInfo = await this.slackClient.users.info({user: payload.message.user})
+        text += `\n\nReported by: ${userInfo.user.real_name}`
+        
         try {
             result = await this.slackClient.views.open({
                 trigger_id: trigger_id,
