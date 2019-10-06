@@ -22,11 +22,12 @@ export default class SlackHandler {
         let result = {success: false}
         if(!_.isEmpty(payload.message.files)) {
             let count = 0
+            text += '\n\nAttachments:'
             _.forEach(payload.message.files, function(file) {
                 console.log("Got file obj: " + JSON.stringify(file))
                 count++
                 const fileUrl = file.permalink
-                text += `\n![attachment-${count}](${fileUrl})`
+                text += `\n\n${fileUrl}`
             })
         }
         try {
