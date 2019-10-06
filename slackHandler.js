@@ -25,7 +25,7 @@ export default class SlackHandler {
             _.forEach(payload.message.files, function(file) {
                 console.log("Got file obj: " + JSON.stringify(file))
                 count++
-                fileUrl = file.permalink
+                const fileUrl = file.permalink
                 text += `\n![attachment-${count}](${fileUrl})`
             })
         }
