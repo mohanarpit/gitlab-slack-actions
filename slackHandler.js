@@ -150,10 +150,14 @@ export default class SlackHandler {
         switch(_.toLower(textArray[0])) {
             case 'devto':
             case 'dev.to':
+                // Sample command: devto publish <link> at <datetime>
                 console.log("Got the devto command")
                 if(_.toLower(textArray[1]) === 'publish') {
-                    console.log('Going to publish devto article')
-                    await this.devtoHandler.publishArticle(textArray[2])
+                    console.log('Going to schedule devto publish')
+                    // TODO: Get the date via interactivity message
+                    await this.devtoHandler.schedulePublish(textArray[2], textArray[4])
+                    // console.log('Going to publish devto article')
+                    // await this.devtoHandler.publishArticle(textArray[2])
                 }
                 break
             default:

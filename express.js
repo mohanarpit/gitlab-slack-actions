@@ -1,4 +1,6 @@
 import SlackHandler from './slackHandler.js'
+import DevtoHandler from './devtoHandler'
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -8,6 +10,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const slackHandler = new SlackHandler()
+const devtoHandler = new DevtoHandler()
+
+app.post('/devto/publish', async(req, res) => {
+    await devtoHandler.handlePublish(req.body)
+    res.send("OK")
+})
 
 app.post('/slack/commands', async (req, res) => {
     const body = req.body
