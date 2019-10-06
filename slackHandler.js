@@ -156,8 +156,6 @@ export default class SlackHandler {
                     console.log('Going to schedule devto publish')
                     // TODO: Get the date via interactivity message
                     await this.devtoHandler.schedulePublish(textArray[2], textArray[4])
-                    // console.log('Going to publish devto article')
-                    // await this.devtoHandler.publishArticle(textArray[2])
                 }
                 break
             default:

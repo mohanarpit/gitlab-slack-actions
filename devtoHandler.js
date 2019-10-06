@@ -7,7 +7,7 @@ export default class DevtoHandler {
         this.postHookApi = new PosthookApi()
         this.devToHeaders = {
             headers: {
-                'api-key': 'atBREPvEPrsWPDEZf8AHMrVm',
+                'api-key': process.env.DEVTO_KEY,
                 'Content-Type': 'application/json'
             }
         }
@@ -43,33 +43,24 @@ export default class DevtoHandler {
     }
 
     async handlePublish(payload) {
-        console.log(payload)
+        const articleId = payload.data.articleId
+        const url = payload.data.canonicalUrl
+        console.log("Going to publish dev.to article id: " + articleId + ' url: ' + url)
+        this.publishArticle(articleId)
     }
 
-    async publishArticle(url) {
-        const unpublishedArticles = await this.getUnpublishedArticles()
-        const article = _.find(unpublishedArticles, { 'canonical_url': url})
-        if(_.isEmpty(article)) {
-            console.log('Unable to find unpublished article')
-            return {success: false}
-        }
-
-        const canonicalUrl = article.canonical_url
-        const id = article.id
-        console.log('Got canonical url:' + canonicalUrl+ ' and id: ' + id)
+    async publishArticle(id) {
         let requestBody = {
             published: true
         };
-        // const publishArticleRes = await axios.put('https://dev.to/api/articles/'+id, requestBody, this.devToHeaders)
-        // console.log(publishArticleRes.data)
-        // return publishArticleRes.data
-        return {success: 'OK'}
+        const publishArticleRes = await axios.put('https://dev.to/api/articles/'+id, requestBody, this.devToHeaders)
+        console.log(publishArticleRes.data)
+        return publishArticleRes.data
     }
 
     async getUnpublishedArticles() {
         console.log('Going to get unpublished articles')
         const getArticleRes = await axios.get('https://dev.to/api/articles/me/unpublished', this.devToHeaders)
-        // console.log(getArticleRes.data)
         return getArticleRes.data
     }
 }

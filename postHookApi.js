@@ -5,7 +5,7 @@ export default class PosthookApi {
     constructor() {
         this.postHookHeaders = {
             headers: {
-                'X-API-Key': '68f6c74d5a3e4d4787330fa672def920',
+                'X-API-Key': process.env.POSTHOOK_KEY,
                 'Content-Type': 'application/json'
             }
         }
