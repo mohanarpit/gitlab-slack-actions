@@ -20,6 +20,14 @@ export default class SlackHandler {
         const text = payload.message.text
         const trigger_id = payload.trigger_id
         let result = {success: false}
+        if(!_.isEmpty(payload.message.files)) {
+            let count = 0
+            _.forEach(payload.message.files, function(file) {
+                count++
+                fileUrl = file.permalink
+                text += `\n![attachment-${count}](${fileUrl})`
+            })
+        }
         try {
             result = await this.slackClient.views.open({
                 trigger_id: trigger_id,
