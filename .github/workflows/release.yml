@@ -12,9 +12,14 @@ jobs:
 
     steps:
     # Checkout the code
+    - name: Figure out the PR number
+      run: echo ${{ github.event.pull_request.number }}
+
+    - name: Print github event
+      run: echo ${{ GITHUB_EVENT_NAME }}
+    
     - uses: actions/checkout@v2
       with:
         ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
-    - name: Figure out the PR number
-      run: echo ${{ github.event.pull_request.number }}
+    
