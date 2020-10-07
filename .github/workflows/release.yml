@@ -19,6 +19,7 @@ jobs:
       run: echo ${{ github.event_name }}
     
     - uses: actions/checkout@v2
+      if: ${{ github.event_name == 'push' }}
       with:
         ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
