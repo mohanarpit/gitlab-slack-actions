@@ -18,10 +18,12 @@ jobs:
     - name: Print github event
       run: echo ${{ github.event_name }}
     
-    - name: Checkout the PR base branch
+    - name: Checkout the base branch + merge
       if: ${{ github.event_name == 'pull_request_target' }}
       uses: actions/checkout@v2
       with:
         ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
-    
+    - name: Checkout the pushed commit
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/checkout@v2      
