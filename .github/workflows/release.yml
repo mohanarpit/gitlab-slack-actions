@@ -18,7 +18,9 @@ jobs:
     - name: Print github event
       run: echo ${{ github.event_name }}
     
-    - uses: actions/checkout@v2
+    - name: Checkout the PR base branch
+      if: ${{ github.event_name == 'push' }}
+      uses: actions/checkout@v2
       with:
         ref: refs/pull/${{ github.event.pull_request.number }}/merge
 
