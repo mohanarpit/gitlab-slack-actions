@@ -16,7 +16,7 @@ jobs:
       run: echo ${{ github.event.pull_request.number }}
 
     - name: Print github event
-      run: echo ${{ github.event.name }}
+      run: echo ${{ github.event_name }}
     
     - uses: actions/checkout@v2
       with:
