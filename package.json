@@ -22,7 +22,7 @@
     "express": "^4.17.1",
     "gitlab": "^11.2.1",
     "lodash": "^4.17.19",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
